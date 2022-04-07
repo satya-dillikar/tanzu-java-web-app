@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       annotations:
-        boot.spring.io/actuator: http://:8080/actuator
+        boot.spring.io/actuator: http://:8081/actuator
         boot.spring.io/version: 2.5.8
         conventions.apps.tanzu.vmware.com/applied-conventions: |-
           spring-boot-convention/spring-boot
@@ -31,15 +31,15 @@ spec:
         carto.run/workload-name: tanzu-java-web-app
         conventions.apps.tanzu.vmware.com/framework: spring-boot
         tanzu.app.live.view: "true"
-        tanzu.app.live.view.application.actuator.port: "8080"
+        tanzu.app.live.view.application.actuator.port: "8081"
         tanzu.app.live.view.application.flavours: spring-boot
         tanzu.app.live.view.application.name: demo
     spec:
       containers:
       - env:
         - name: JAVA_TOOL_OPTIONS
-          value: -Dmanagement.endpoint.health.show-details=always -Dmanagement.endpoints.web.base-path="/actuator" -Dmanagement.endpoints.web.exposure.include=* -Dmanagement.server.port="8080" -Dserver.port="8080" -Dserver.shutdown.grace-period="24s"
-        image: dev.registry.pivotal.io/sdillikar/tap-supply-chain/tanzu-java-web-app-mydev-ns@sha256:89fd2215ba126684b1bc2c00e3558e7e988288c23ef555d609ff5850d014771d
+          value: -Dmanagement.endpoint.health.probes.add-additional-paths="true" -Dmanagement.endpoint.health.show-details=always -Dmanagement.endpoints.web.base-path="/actuator" -Dmanagement.endpoints.web.exposure.include=* -Dmanagement.health.probes.enabled="true" -Dmanagement.server.port="8081" -Dserver.port="8080" -Dserver.shutdown.grace-period="24s"
+        image: dev.registry.pivotal.io/sdillikar/tap-supply-chain/tanzu-java-web-app-mydev-ns@sha256:7136b93ac7aa824b13c251da9c092dc2ebbe9704340a41c7884bf0a6133ade59
         name: workload
         ports:
         - containerPort: 8080
